@@ -1,7 +1,7 @@
 
 
 
-const textarea = document.querySelector('#textarea');
+let textarea = document.querySelector('#textarea');
 const btnGravar = document.querySelector('#btnGravar');
 const btnParar = document.querySelector('#btnParar');
 const btnBaixar = document.querySelector('#btnBaixar');
@@ -18,17 +18,23 @@ class speechApi{
 
      this.output = textarea.output;
 
+    
+
 
      this.speechApi.continuous = true;
      this.speechApi.lang = "pt-BR";
 
      this.speechApi.onresult = (e) => {
-        var resultIndex = e.resultIndex
-        var transcript = e.results[resultIndex][0].transcript
+        let resultIndex = e.resultIndex
+        let transcript = e.results[resultIndex][0].transcript;
 
         console.log(transcript);
 
+
+        localStorage.setItem('teste',JSON.stringify(transcript));
         textarea.value += transcript;
+
+        
      }
 
     }
@@ -44,7 +50,7 @@ class speechApi{
 
 
 
-const speech = new speechApi();
+let speech = new speechApi();
 
 btnGravar.addEventListener('click',()=>{
     btnBaixar.disabled = true;
