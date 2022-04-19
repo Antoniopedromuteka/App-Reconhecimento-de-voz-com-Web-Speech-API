@@ -4,7 +4,7 @@
 const textarea = document.querySelector('#textarea');
 const btnGravar = document.querySelector('#btnGravar');
 const btnParar = document.querySelector('#btnParar');
-const btnBaixar = document.querySelector('#btnGravar');
+const btnBaixar = document.querySelector('#btnBaixar');
 const btnLimpar = document.querySelector('#btnLimpar');
 
 
@@ -12,20 +12,21 @@ class speechApi{
 
     constructor(){
 
-     const speechToText = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const speechToText = window.SpeechRecognition || window.webkitSpeechRecognition;
      
      this.speechApi = new speechToText();
 
      this.output = textarea.output;
 
+
      this.speechApi.continuous = true;
-     this.speechApi.lang = 'pt-BR';
+     this.speechApi.lang = "pt-BR";
 
-     this.speechApi.onresult = resultado => {
+     this.speechApi.onresult = (e) => {
+        var resultIndex = e.resultIndex
+        var transcript = e.results[resultIndex][0].transcript
 
-        const resultIndex = resultado.resultIndex;
-        const transcript = resultado.results[resultIndex][0].transcript; 
-
+        console.log(transcript);
 
         textarea.value += transcript;
      }
@@ -49,12 +50,14 @@ btnGravar.addEventListener('click',()=>{
     btnBaixar.disabled = true;
     btnParar.disabled = false;
 
+   
     speech.start(); 
 })
 
 btnParar.addEventListener('click',()=>{
     btnBaixar.disabled = false;
     btnParar.disabled = true;
+
 
     speech.stop(); 
 })
@@ -87,7 +90,7 @@ function donwload(text, filename){
     element.click();
 
     document.body.removeChild(element);
-
+    
 }
 
 
